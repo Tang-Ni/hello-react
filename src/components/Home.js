@@ -8,7 +8,7 @@ export default class Home extends Component {
     super(props);
     this.state = {
       age: props.age,
-      homeLink: "change link"
+      homeLink: props.initialName
     };
   }
   onMakeOlder() {
@@ -25,6 +25,15 @@ export default class Home extends Component {
    */
   onChangeHeaderLink() {
     this.props.changeLink(this.state.homeLink)
+  }
+
+  /**
+   * 双向绑定
+   */
+  onHadleChange(event) {
+    this.setState({
+      homeLink: event.target.value
+    })
   }
   render() {
     console.log(this.props)
@@ -46,6 +55,10 @@ export default class Home extends Component {
         </div>
         <div>
           {this.props.children}
+          <input type="text"
+           defaultValue={this.props.initialName}
+           value={this.state.initialName}
+           onChange={(event) =>this.onHadleChange(event)}/>
         </div>
       </div>
     );
@@ -54,6 +67,7 @@ export default class Home extends Component {
 Home.propTypes = {
   age: PropTypes.number,
   children: PropTypes.element.isRequired,
-  greet: PropTypes.func
+  greet: PropTypes.func,
+  initialName: PropTypes.string
 };
 
